@@ -1,0 +1,21 @@
+name: Summary CI
+on:
+  schedule:
+    - cron: "15 * * * *"     # каждый час, между Upptime CI и Static Site CI
+  repository_dispatch:
+    types: [summary]
+  workflow_dispatch:
+jobs:
+  release:
+    name: Generate summary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          token: ${{ secrets.GH_PAT }}
+      - uses: upptime/uptime-monitor@master
+        with:
+          command: "summary"
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
