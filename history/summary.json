@@ -16,23 +16,5 @@
     "timeMonth": 168,
     "timeYear": 168,
     "dailyMinutesDown": {}
-  },
-  {
-    "name": "API (logos.json)",
-    "url": "https://trace-logos.ru/logos.json",
-    "icon": "https://icons.duckduckgo.com/ip3/trace-logos.ru.ico",
-    "slug": "api-logos-json",
-    "status": "up",
-    "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 175,
-    "timeDay": 175,
-    "timeWeek": 175,
-    "timeMonth": 175,
-    "timeYear": 175,
-    "dailyMinutesDown": {}
   }
 ]
