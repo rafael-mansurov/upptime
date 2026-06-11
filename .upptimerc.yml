@@ -1,0 +1,32 @@
+# Upptime config — https://upptime.js.org/docs/configuration
+owner: rafael-mansurov      # GitHub username (из git remote основного репозитория)
+repo: upptime               # название репозитория
+
+sites:
+  - name: Главный сайт
+    url: https://trace-logos.ru
+  - name: API (logos.json)
+    url: https://trace-logos.ru/logos.json
+  # cdn.trace-logos.ru не существует в DNS (проверено 2026-06-11) —
+  # раскомментировать после запуска CDN
+  # - name: CDN SVG (тест)
+  #   url: https://cdn.trace-logos.ru/svg/sberbank.svg
+  #   expectedStatusCodes:
+  #     - 200
+  #     - 301
+  #     - 302
+  # figma.trace-logos.ru не существует в DNS (проверено 2026-06-11) —
+  # раскомментировать после запуска страницы плагина
+  # - name: Figma Plugin page
+  #   url: https://figma.trace-logos.ru
+
+status-website:
+  cname: status.trace-logos.ru
+  name: Trace Logos Status
+  theme: light
+  navbar:
+    - title: Главный сайт
+      href: https://trace-logos.ru
+
+assignees:
+  - rafael-mansurov          # GitHub username для уведомлений

@@ -1,0 +1,15 @@
+name: Upptime CI
+on:
+  schedule:
+    - cron: "0 * * * *"      # каждый час
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  summary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: upptime/uptime-monitor@master
+        with:
+          UPPTIME_GH_TOKEN: ${{ secrets.GH_PAT }}
