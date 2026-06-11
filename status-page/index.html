@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Статус сервисов — Trace Logo's</title>
+  <meta name="description" content="Доступность и время отклика сервисов Trace Logo's в реальном времени.">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <meta property="og:title" content="Статус сервисов — Trace Logo's">
+  <meta property="og:description" content="Доступность и время отклика сервисов Trace Logo's в реальном времени.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://status.trace-logos.ru/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --accent: #8a6bff;
+      --accent-dim: rgba(138, 107, 255, 0.12);
+      --text: #ffffff;
+      --text-muted: #888888;
+      --text-dim: #5a5a5a;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(255, 255, 255, 0.14);
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-bg-hover: rgba(255, 255, 255, 0.07);
+      --maxw: 1080px;
+      --ok: #2fd47e;
+      --ok-dim: rgba(47, 212, 126, 0.12);
+      --down: #ff5b5b;
+      --down-dim: rgba(255, 91, 91, 0.12);
+      --degraded: #ffb84d;
+      --degraded-dim: rgba(255, 184, 77, 0.12);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(138, 107, 255, 0.18) 0%, transparent 65%),
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 100% 100%, 52px 52px, 52px 52px;
+      background-attachment: fixed;
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    /* ── Header ── */
+    .site-header {
+      height: 60px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 0 28px;
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(10, 10, 10, 0.82);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .brand-logo { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .brand-logo img { width: 100%; height: 100%; display: block; border-radius: 8px; }
+    .brand-name { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+    .brand-badge {
+      display: inline-block; font-size: 10px; font-weight: 600; color: var(--accent);
+      background: var(--accent-dim); border: 1px solid rgba(138, 107, 255, 0.2);
+      border-radius: 4px; padding: 1px 6px; margin-left: 7px; letter-spacing: 0.03em; vertical-align: middle;
+    }
+    .btn-site {
+      display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500;
+      color: var(--text); background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 13px; text-decoration: none; transition: background .15s, border-color .15s;
+    }
+    .btn-site:hover { background: var(--card-bg-hover); border-color: var(--border-hover); }
+    .btn-site svg { opacity: 0.75; }
+
+    /* ── Layout ── */
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; width: 100%; }
+
+    /* ── Hero / overall banner ── */
+    .hero { text-align: center; padding: 72px 24px 12px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500;
+      color: var(--text-muted); background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 100px; padding: 5px 13px; margin-bottom: 26px;
+    }
+    .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 6px var(--ok); flex-shrink: 0; }
+    .pill.is-down .pill-dot { background: var(--down); box-shadow: 0 0 6px var(--down); }
+    .pill.is-degraded .pill-dot { background: var(--degraded); box-shadow: 0 0 6px var(--degraded); }
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 50px); font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.03em; max-width: 760px; margin: 0 auto 14px;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; max-width: 520px; margin: 0 auto; }
+
+    /* ── Services ── */
+    .services { padding: 36px 0 80px; }
+    .services-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 16px; gap: 12px; flex-wrap: wrap;
+    }
+    .services-head h2 { font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-dim); }
+    .services-head .updated { font-size: 12px; color: var(--text-dim); }
+
+    .card-grid { display: grid; gap: 12px; }
+    .svc {
+      border: 1px solid var(--border); background: var(--card-bg); border-radius: 14px;
+      padding: 20px 22px; transition: border-color .15s, background .15s;
+    }
+    .svc:hover { border-color: var(--border-hover); background: var(--card-bg-hover); }
+    .svc-top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .svc-status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .svc-status-dot.up { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+    .svc-status-dot.down { background: var(--down); box-shadow: 0 0 8px var(--down); }
+    .svc-status-dot.degraded { background: var(--degraded); box-shadow: 0 0 8px var(--degraded); }
+    .svc-name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+    .svc-url { font-size: 12px; color: var(--text-dim); text-decoration: none; margin-left: auto; transition: color .15s; word-break: break-all; }
+    .svc-url:hover { color: var(--text-muted); }
+    .svc-badge {
+      font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 100px; white-space: nowrap;
+    }
+    .svc-badge.up { color: var(--ok); background: var(--ok-dim); }
+    .svc-badge.down { color: var(--down); background: var(--down-dim); }
+    .svc-badge.degraded { color: var(--degraded); background: var(--degraded-dim); }
+
+    .svc-stats {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+      border-top: 1px solid var(--border); padding-top: 16px;
+    }
+    .stat { display: flex; flex-direction: column; gap: 4px; }
+    .stat-label { font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); }
+    .stat-value { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+    .stat-value.muted { color: var(--text-muted); }
+
+    /* ── States ── */
+    .msg { text-align: center; padding: 60px 24px; color: var(--text-muted); font-size: 14px; }
+    .skeleton { color: var(--text-dim); }
+
+    /* ── Footer ── */
+    .site-footer { border-top: 1px solid var(--border); padding: 28px 0; }
+    .footer-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+      font-size: 12px; color: var(--text-dim);
+    }
+    .footer-row a { color: var(--text-muted); text-decoration: none; }
+    .footer-row a:hover { color: var(--text); }
+
+    @media (max-width: 640px) {
+      .site-header { padding: 0 16px; }
+      .hero { padding: 52px 20px 8px; }
+      .svc-stats { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .svc-url { display: none; }
+      .svc-badge { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="https://trace-logos.ru" aria-label="Trace Logo's — на главную">
+    <span class="brand-logo" aria-hidden="true"><img src="logo.svg" alt="" width="30" height="30"></span>
+    <span class="brand-name">Trace Logo's<span class="brand-badge">Status</span></span>
+  </a>
+  <a class="btn-site" href="https://trace-logos.ru" rel="noopener">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    <span>На сайт</span>
+  </a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="pill" id="overall-pill" role="status">
+        <span class="pill-dot" aria-hidden="true"></span>
+        <span id="overall-pill-text">Проверяем статус…</span>
+      </div>
+      <h1 id="overall-title">Статус сервисов</h1>
+      <p class="hero-desc" id="overall-desc">Доступность и время отклика сервисов Trace Logo&rsquo;s. Проверка каждый час автоматически.</p>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="wrap">
+      <div class="services-head">
+        <h2>Сервисы</h2>
+        <span class="updated" id="updated"></span>
+      </div>
+      <div class="card-grid" id="grid">
+        <div class="msg skeleton">Загрузка данных…</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <span>Мониторинг на базе <a href="https://upptime.js.org" rel="noopener">Upptime</a> · GitHub Actions</span>
+      <span><a href="https://github.com/rafael-mansurov/upptime" rel="noopener">Открытый исходный код</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const STATUS_RU = { up: 'Работает', down: 'Недоступен', degraded: 'Замедлен' };
+
+  function fmtTime(ms) {
+    if (ms == null || isNaN(ms)) return '—';
+    return ms + ' мс';
+  }
+
+  function render(sites) {
+    const grid = document.getElementById('grid');
+    const pill = document.getElementById('overall-pill');
+    const pillText = document.getElementById('overall-pill-text');
+    const title = document.getElementById('overall-title');
+    const desc = document.getElementById('overall-desc');
+
+    if (!sites.length) {
+      grid.innerHTML = '<div class="msg">Нет отслеживаемых сервисов.</div>';
+      return;
+    }
+
+    const anyDown = sites.some(s => s.status === 'down');
+    const anyDegraded = sites.some(s => s.status === 'degraded');
+
+    pill.classList.remove('is-down', 'is-degraded');
+    if (anyDown) {
+      pill.classList.add('is-down');
+      pillText.textContent = 'Есть сбои';
+      title.innerHTML = 'Не все системы <span class="accent">работают</span>';
+      desc.textContent = 'Один или несколько сервисов сейчас недоступны. Мы уже знаем о проблеме.';
+    } else if (anyDegraded) {
+      pill.classList.add('is-degraded');
+      pillText.textContent = 'Замедленная работа';
+      title.innerHTML = 'Системы <span class="accent">работают с замедлением</span>';
+      desc.textContent = 'Сервисы отвечают, но медленнее обычного.';
+    } else {
+      pillText.textContent = 'Все системы работают';
+      title.innerHTML = 'Все системы <span class="accent">работают</span>';
+      desc.textContent = 'Все сервисы Trace Logo’s доступны и отвечают в штатном режиме.';
+    }
+
+    grid.innerHTML = sites.map(s => {
+      const st = s.status || 'up';
+      const stRu = STATUS_RU[st] || st;
+      return `
+        <article class="svc">
+          <div class="svc-top">
+            <span class="svc-status-dot ${st}" aria-hidden="true"></span>
+            <span class="svc-name">${escapeHtml(s.name)}</span>
+            <a class="svc-url" href="${escapeAttr(s.url)}" rel="noopener" target="_blank">${escapeHtml(s.url)}</a>
+            <span class="svc-badge ${st}">${stRu}</span>
+          </div>
+          <div class="svc-stats">
+            <div class="stat"><span class="stat-label">Сейчас</span><span class="stat-value muted">${fmtTime(s.time)}</span></div>
+            <div class="stat"><span class="stat-label">24 часа</span><span class="stat-value">${s.uptimeDay || '—'}</span></div>
+            <div class="stat"><span class="stat-label">7 дней</span><span class="stat-value">${s.uptimeWeek || '—'}</span></div>
+            <div class="stat"><span class="stat-label">30 дней</span><span class="stat-value">${s.uptimeMonth || '—'}</span></div>
+            <div class="stat"><span class="stat-label">Год</span><span class="stat-value">${s.uptimeYear || '—'}</span></div>
+          </div>
+        </article>`;
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  async function load() {
+    try {
+      const res = await fetch('summary.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const sites = await res.json();
+      render(Array.isArray(sites) ? sites : []);
+      const upd = document.getElementById('updated');
+      const now = new Date();
+      upd.textContent = 'Обновлено ' + now.toLocaleString('ru-RU', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      document.getElementById('grid').innerHTML = '<div class="msg">Не удалось загрузить данные мониторинга. Обновите страницу позже.</div>';
+      document.getElementById('overall-pill-text').textContent = 'Статус недоступен';
+    }
+  }
+
+  load();
+</script>
+
+</body>
+</html>

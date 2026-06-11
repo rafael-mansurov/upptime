@@ -1,28 +1,24 @@
 name: Static Site CI
 on:
   schedule:
-    - cron: "0 1 * * *"      # раз в сутки
+    - cron: "30 * * * *"     # каждый час, со сдвигом после Upptime CI
   repository_dispatch:
     types: [static_site]
   workflow_dispatch:
 jobs:
   release:
-    name: Build and deploy site
+    name: Build and deploy custom status page
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: master
           token: ${{ secrets.GH_PAT }}
-      - uses: upptime/uptime-monitor@master
-        with:
-          command: "site"
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-      - name: Deploy site
+      - name: Assemble status page
+        run: cp history/summary.json status-page/summary.json
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.GH_PAT }}
-          publish_dir: "site/status-page/__sapper__/export/"
-          force_orphan: "false"
-          keep_files: "true"
+          publish_dir: "status-page"
+          force_orphan: true
