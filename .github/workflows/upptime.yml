@@ -12,4 +12,6 @@ jobs:
     steps:
       - uses: upptime/uptime-monitor@master
         with:
-          UPPTIME_GH_TOKEN: ${{ secrets.GH_PAT }}
+          command: "update"
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
