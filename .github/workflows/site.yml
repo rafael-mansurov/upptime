@@ -19,3 +19,10 @@ jobs:
           command: "site"
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
+      - name: Deploy site
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.GH_PAT }}
+          publish_dir: "site/status-page/__sapper__/export/"
+          force_orphan: "false"
+          keep_files: "true"
