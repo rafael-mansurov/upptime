@@ -192,7 +192,6 @@
     <div class="wrap">
       <div class="services-head">
         <h2>Сервисы</h2>
-        <span class="updated" id="updated"></span>
       </div>
       <div class="card-grid" id="grid">
         <div class="msg skeleton">Загрузка данных…</div>
@@ -221,7 +220,6 @@
   function render(sites) {
     const grid = document.getElementById('grid');
     const pill = document.getElementById('overall-pill');
-    const pillText = document.getElementById('overall-pill-text');
     const title = document.getElementById('overall-title');
     const desc = document.getElementById('overall-desc');
 
@@ -236,16 +234,13 @@
     pill.classList.remove('is-down', 'is-degraded');
     if (anyDown) {
       pill.classList.add('is-down');
-      pillText.textContent = 'Есть сбои';
       title.innerHTML = 'Не все системы <span class="accent">работают</span>';
       desc.textContent = 'Один или несколько сервисов сейчас недоступны. Мы уже знаем о проблеме.';
     } else if (anyDegraded) {
       pill.classList.add('is-degraded');
-      pillText.textContent = 'Замедленная работа';
       title.innerHTML = 'Системы <span class="accent">работают с замедлением</span>';
       desc.textContent = 'Сервисы отвечают, но медленнее обычного.';
     } else {
-      pillText.textContent = 'Все системы работают';
       title.innerHTML = 'Все системы <span class="accent">работают</span>';
       desc.textContent = 'Все сервисы Trace Logo’s доступны и отвечают в штатном режиме.';
     }
@@ -283,9 +278,9 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const sites = await res.json();
       render(Array.isArray(sites) ? sites : []);
-      const upd = document.getElementById('updated');
       const now = new Date();
-      upd.textContent = 'Обновлено ' + now.toLocaleString('ru-RU', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      const stamp = now.toLocaleString('ru-RU', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      document.getElementById('overall-pill-text').textContent = 'Обновлено ' + stamp;
     } catch (e) {
       document.getElementById('grid').innerHTML = '<div class="msg">Не удалось загрузить данные мониторинга. Обновите страницу позже.</div>';
       document.getElementById('overall-pill-text').textContent = 'Статус недоступен';
