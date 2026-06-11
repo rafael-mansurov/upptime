@@ -1,13 +1,14 @@
-name: Upptime CI
+name: Setup CI
 on:
-  schedule:
-    - cron: "0 * * * *"      # каждый час
-  workflow_dispatch:
   push:
-    branches:
-      - master
+    paths:
+      - ".upptimerc.yml"
+  repository_dispatch:
+    types: [setup]
+  workflow_dispatch:
 jobs:
-  summary:
+  release:
+    name: Setup Upptime
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,6 +17,6 @@ jobs:
           token: ${{ secrets.GH_PAT }}
       - uses: upptime/uptime-monitor@master
         with:
-          command: "update"
+          command: "setup"
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
