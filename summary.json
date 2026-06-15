@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Главный сайт",
+    "url": "https://trace-logos.ru",
+    "icon": "https://icons.duckduckgo.com/ip3/trace-logos.ru.ico",
+    "slug": "glavnyj-sajt",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 168,
+    "timeDay": 0,
+    "timeWeek": 168,
+    "timeMonth": 168,
+    "timeYear": 168,
+    "dailyMinutesDown": {}
+  }
+]
